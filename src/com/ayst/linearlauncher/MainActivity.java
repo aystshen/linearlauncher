@@ -109,14 +109,19 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        apps = context.getPackageManager().queryIntentActivities(intent, 0);
+        List<ResolveInfo> appsAll = context.getPackageManager().queryIntentActivities(intent, 0);
 
-        for (String pkg : mHidePackageList) {
-            Log.i(TAG, "getAllApps, pkg=" + pkg);
-            for (ResolveInfo item : apps) {
+        boolean isHide = false;
+        for (ResolveInfo item : appsAll) {
+            isHide = false;
+            for (String pkg : mHidePackageList) {
                 if (item.activityInfo.packageName.equals(pkg)) {
-                    apps.remove(item);
+                    isHide = true;
+                    break;
                 }
+            }
+            if (!isHide) {
+                apps.add(item);
             }
         }
 
