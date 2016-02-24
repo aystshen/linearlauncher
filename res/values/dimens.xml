@@ -1,0 +1,11 @@
+<resources>
+     <dimen name="grid_view_margin_top">180dp</dimen>
+     <dimen name="grid_view_height">370dp</dimen>
+     <dimen name="grid_view_margin_fix">50dp</dimen>
+     <dimen name="scale_item_width">213dp</dimen>
+     <dimen name="scale_item_heitht">300dp</dimen>
+     <dimen name="scale_item_iv_margin_top">30dp</dimen>
+     <dimen name="scale_item_iv_width">177dp</dimen>
+     <dimen name="scale_item_iv_heitht">177dp</dimen>
+     <dimen name="scale_item_tv_margin_top">20dp</dimen>
+</resources>

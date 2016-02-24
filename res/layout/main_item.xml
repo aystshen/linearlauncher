@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ayst.linearlauncher.widget.twoway.ScaleItemView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mainItem"
+        android:layout_width="@dimen/scale_item_width"
+        android:layout_height="@dimen/scale_item_heitht"
+        android:gravity="center"
+        app:fixMargin="@dimen/grid_view_margin_fix"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+    <RelativeLayout
+            android:id="@+id/item_main_inner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:alpha="0.5">
+
+        <com.ayst.linearlauncher.widget.CircleImageView
+                android:id="@+id/iv_title"
+                android:layout_marginTop="@dimen/scale_item_iv_margin_top"
+                android:layout_width="@dimen/scale_item_iv_width"
+                android:layout_height="@dimen/scale_item_iv_heitht"
+                android:layout_centerHorizontal="true"
+                android:focusable="false"
+                android:contentDescription="@null"/>
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/scale_item_tv_margin_top"
+                android:gravity="center"
+                android:focusable="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"/>
+    </RelativeLayout>
+
+</com.ayst.linearlauncher.widget.twoway.ScaleItemView>

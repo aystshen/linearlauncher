@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rl_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_launcher"
+                tools:context="com.ayst.linearlauncher.MainActivity">
+
+    <com.ayst.linearlauncher.widget.twoway.TwoWayGridView
+            android:id="@+id/twoway_gridview"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/grid_view_margin_top"
+            android:layout_height="@dimen/grid_view_height"
+            android:clipChildren="false"
+            android:clipToPadding="true"
+            android:scrollbars="none"
+            app:cacheColorHint="#00000000"
+            app:horizontalSpacing="0dp"
+            app:numRows="1"
+            app:fixMargin="@dimen/grid_view_margin_fix"
+            app:scrollDirectionLandscape="horizontal"
+            app:stretchMode="none"
+            app:numColumns="auto_fit" />
+
+</RelativeLayout>
+
