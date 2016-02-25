@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+
+    <declare-styleable name="lbBaseGridView">
+
+        <!--
+             Allow DPAD key to navigate out at the front of the View (where position = 0),
+             default is false
+        -->
+        <attr name="focusOutFront" format="boolean" />
+        <!-- Allow DPAD key to navigate out at the end of the view, default is false -->
+        <attr name="focusOutEnd" format="boolean" />
+        <!-- Defining margin between two items horizontally -->
+        <attr name="horizontalMargin" format="dimension" />
+        <!-- Defining margin between two items vertically -->
+        <attr name="verticalMargin" format="dimension" />
+        <!-- Defining gravity of child view -->
+        <attr name="android:gravity" />
+    </declare-styleable>
+
+
+    <declare-styleable name="lbHorizontalGridView">
+
+        <!-- Defining height of each row of HorizontalGridView -->
+        <attr name="rowHeight" format="dimension">
+            <enum name="wrap_content" value="-2" />
+        </attr>
+        <!-- Defining number of rows -->
+        <attr name="numberOfRows" format="integer" />
+    </declare-styleable>
+
+    <item name="lb_focus_animator" type="id"/>
+
+
+
+</resources>

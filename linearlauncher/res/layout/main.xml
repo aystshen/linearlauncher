@@ -85,6 +85,20 @@
                 <!--app:scrollDirectionLandscape="horizontal"-->
                 <!--app:stretchMode="none"-->
                 <!--app:numColumns="auto_fit"/>-->
+        <android.support.v17.leanback.widget.HorizontalGridView
+                android:id="@+id/bottom_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:horizontalMargin="-40dip"
+                app:verticalMargin="100dip"
+                app:numberOfRows="1"
+                app:rowHeight="420dp"
+                android:padding="50dp"/>
+
     </LinearLayout>
 
 </RelativeLayout>

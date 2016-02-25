@@ -232,7 +232,7 @@ public class TwoWayGridView extends TwoWayAbsListView {
             setColumnWidth(columnWidth);
         }
 
-        int rowHeight = a.getDimensionPixelOffset(R.styleable.TwoWayGridView_rowHeight, -1);
+        int rowHeight = a.getDimensionPixelOffset(R.styleable.TwoWayGridView_rowHeight_1, -1);
         if (rowHeight > 0) {
             setRowHeight(rowHeight);
         }

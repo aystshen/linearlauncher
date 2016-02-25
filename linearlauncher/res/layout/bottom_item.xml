@@ -19,7 +19,7 @@
             android:alpha="0.5">
 
         <com.ayst.linearlauncher.widget.CircleImageView
-                android:id="@+id/iv_title"
+                android:id="@+id/iv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
@@ -27,10 +27,10 @@
                 android:contentDescription="@null"/>
 
         <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_title"
+                android:layout_below="@id/iv"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:gravity="center"

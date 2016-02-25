@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v17.leanback.widget.HorizontalGridView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,8 +39,8 @@ public class MainActivity extends Activity {
     private TextView mBottomText = null;
     private Button mBottomHideBtn = null;
     private Button mBottomUninstallBtn = null;
-//    private TwoWayGridView mBottomGridView = null;
-//    private MainAdapter mBottomAdapter = null;
+    private HorizontalGridView mBottomGridView = null;
+    private GridViewAdapter mBottomAdapter = null;
 
     private PackageChangedReceiver mPkgChangedReceiver = null;
 
@@ -80,11 +81,11 @@ public class MainActivity extends Activity {
     private void initData() {
         mHidePackageList = HidePackageList.get(this);
 
+
         mAdapter = new MainAdapter(this, R.layout.main_item);
         mAdapter.addAll(getAllApps(this, true));
 
-//        mBottomAdapter = new MainAdapter(this, R.layout.bottom_item);
-//        mBottomAdapter.addAll(getAllApps(this, false));
+        mBottomAdapter = new GridViewAdapter(this, getAllApps(this, false));
 
         mBackDoorHide = new BackDoor(BackDoor.DOORKEY_HIDE);
         mBackDoorReset = new BackDoor(BackDoor.DOORKEY_RESET);
@@ -127,23 +128,8 @@ public class MainActivity extends Activity {
         mBottomText = (TextView) findViewById(R.id.bottom_text);
         mBottomHideBtn = (Button) findViewById(R.id.btn_hide);
         mBottomUninstallBtn = (Button) findViewById(R.id.btn_del);
-//        mBottomGridView = (TwoWayGridView) findViewById(R.id.bottom_gridview);
-//        mBottomGridView.setOnItemClickListener(new TwoWayAdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(TwoWayAdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                Log.i(TAG, "mBottomGridView onItemClick position=" + position);
-//                if (position >= 0 && position < mBottomAdapter.getCount()) {
-//                    ResolveInfo item = mBottomAdapter.getItem(position);
-//                    if (item != null) {
-//                    } else {
-//                        Log.i(TAG, "Item is null");
-//                    }
-//                }
-//            }
-//        });
-//        mBottomGridView.setAdapter(mBottomAdapter);
+        mBottomGridView = (HorizontalGridView) findViewById(R.id.bottom_gridview);
+        mBottomGridView.setAdapter(mBottomAdapter);
     }
 
     @Override

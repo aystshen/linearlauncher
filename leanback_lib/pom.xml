@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <name>Android Leaback V17</name>
+   <parent> 
+      <groupId>us.nineworlds.android</groupId>
+      <artifactId>adt-android-support</artifactId>
+      <version>21.0.2</version>
+   </parent>
+
+   <artifactId>leanback-v17</artifactId>
+   <packaging>apklib</packaging>
+
+   <properties>
+      <android-version>4.2.2_r2</android-version>
+   </properties>
+
+   <dependencies>
+      <dependency>
+         <groupId>android</groupId>
+         <artifactId>android</artifactId>
+         <version>5.0_r1</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>us.nineworlds.android</groupId>
+         <artifactId>recyclerview-v7</artifactId>
+         <version>21.0.2</version>
+         <type>apklib</type>
+      </dependency>
+
+   </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+            <artifactId>android-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+               <sdk>
+                  <platform>21</platform>
+               </sdk>
+            </configuration>
+         </plugin>
+         <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <source>1.6</source>
+               <target>1.6</target>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+</project>
