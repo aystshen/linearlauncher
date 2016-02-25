@@ -22,7 +22,70 @@
             app:fixMargin="@dimen/grid_view_margin_fix"
             app:scrollDirectionLandscape="horizontal"
             app:stretchMode="none"
-            app:numColumns="auto_fit" />
+            app:numColumns="auto_fit"/>
+
+    <LinearLayout android:id="@+id/ll_bottom"
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="100dp"
+                  android:layout_alignParentBottom="true"
+                  android:paddingLeft="20dp"
+                  android:paddingRight="20dp"
+                  android:gravity="center_vertical"
+                  android:background="#77000000"
+                  android:visibility="gone">
+        <com.ayst.linearlauncher.widget.CircleImageView
+                   android:id="@+id/bottom_icon"
+                   android:layout_width="60dp"
+                   android:layout_height="60dp"/>
+        <TextView android:id="@+id/bottom_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="20dp"
+                  android:textColor="#ffffff"
+                  android:singleLine="true"
+                  android:textSize="25sp"
+                  android:text=""/>
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="20dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+            <Button android:id="@+id/btn_hide"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="24sp"
+                    android:background="@drawable/button_selector"
+                    android:text="@string/hide"/>
+            <Button android:id="@+id/btn_del"
+                    android:layout_width="120dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="24sp"
+                    android:background="@drawable/button_selector"
+                    android:text="@string/uninstall"/>
+        </LinearLayout>
+        <!--<com.ayst.linearlauncher.widget.twoway.TwoWayGridView-->
+                <!--android:id="@+id/bottom_gridview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:clipChildren="false"-->
+                <!--android:clipToPadding="true"-->
+                <!--android:scrollbars="none"-->
+                <!--app:cacheColorHint="#00000000"-->
+                <!--app:horizontalSpacing="0dp"-->
+                <!--app:numRows="1"-->
+                <!--app:fixMargin="10dp"-->
+                <!--app:scrollDirectionLandscape="horizontal"-->
+                <!--app:stretchMode="none"-->
+                <!--app:numColumns="auto_fit"/>-->
+    </LinearLayout>
 
 </RelativeLayout>
 

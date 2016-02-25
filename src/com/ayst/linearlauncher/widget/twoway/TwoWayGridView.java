@@ -660,7 +660,7 @@ public class TwoWayGridView extends TwoWayAbsListView {
                     } else {
                         handled = fullScroll(FOCUS_UP);
                     }
-                    handled = true;
+                    //handled = true;
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
@@ -671,7 +671,7 @@ public class TwoWayGridView extends TwoWayAbsListView {
                     } else {
                         handled = fullScroll(FOCUS_DOWN);
                     }
-                    handled = true;
+                    //handled = true;
                     break;
 
                 case KeyEvent.KEYCODE_DPAD_UP:

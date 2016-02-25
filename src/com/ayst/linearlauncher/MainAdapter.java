@@ -17,11 +17,13 @@ public class MainAdapter extends ArrayAdapter<ResolveInfo> {
     private LayoutInflater mInflater;
     private int mFixSide = 70;
     private PackageManager mPkgManager = null;
+    private int mLayoutId = R.layout.main_item;
 
-    public MainAdapter(Context context) {
+    public MainAdapter(Context context, int layoutId) {
         super(context, 0);
         mInflater = LayoutInflater.from(context);
         mPkgManager = context.getPackageManager();
+        mLayoutId = layoutId;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class MainAdapter extends ArrayAdapter<ResolveInfo> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = (RelativeLayout) mInflater.inflate(
-                    R.layout.main_item, parent, false);
+                    mLayoutId, parent, false);
             viewHolder.mIvTitle = (ImageView) convertView
                     .findViewById(R.id.iv_title);
             viewHolder.mTvTitle = (TextView) convertView
