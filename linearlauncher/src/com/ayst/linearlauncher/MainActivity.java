@@ -16,8 +16,6 @@ import android.widget.TextView;
 import com.ayst.linearlauncher.utils.BackDoor;
 import com.ayst.linearlauncher.utils.HidePackageList;
 import com.ayst.linearlauncher.widget.CircleImageView;
-import com.ayst.linearlauncher.widget.twoway.TwoWayAdapterView;
-import com.ayst.linearlauncher.widget.twoway.TwoWayGridView;
 
 import java.util.ArrayList;
 import java.util.List;
