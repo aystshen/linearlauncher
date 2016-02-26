@@ -35,10 +35,12 @@ public class MainActivity extends Activity {
     private ArrayList<String> mHidePackageList = null;
 
     private LinearLayout mBottomView = null;
+    private LinearLayout mBottomSubView = null;
     private CircleImageView mBottomIcon = null;
     private TextView mBottomText = null;
     private Button mBottomHideBtn = null;
     private Button mBottomUninstallBtn = null;
+    private Button mBottomAddBtn = null;
     private HorizontalGridView mBottomGridView = null;
     private GridViewAdapter mBottomAdapter = null;
 
@@ -85,8 +87,6 @@ public class MainActivity extends Activity {
         mAdapter = new MainAdapter(this, R.layout.main_item);
         mAdapter.addAll(getAllApps(this, true));
 
-        mBottomAdapter = new GridViewAdapter(this, getAllApps(this, false));
-
         mBackDoorHide = new BackDoor(BackDoor.DOORKEY_HIDE);
         mBackDoorReset = new BackDoor(BackDoor.DOORKEY_RESET);
     }
@@ -128,8 +128,38 @@ public class MainActivity extends Activity {
         mBottomText = (TextView) findViewById(R.id.bottom_text);
         mBottomHideBtn = (Button) findViewById(R.id.btn_hide);
         mBottomUninstallBtn = (Button) findViewById(R.id.btn_del);
+        mBottomAddBtn = (Button) findViewById(R.id.btn_add);
+        mBottomSubView = (LinearLayout) findViewById(R.id.ll_sub);
         mBottomGridView = (HorizontalGridView) findViewById(R.id.bottom_gridview);
+        mBottomAdapter = new GridViewAdapter(this, mBottomGridView, getAllApps(this, false));
         mBottomGridView.setAdapter(mBottomAdapter);
+        mBottomAdapter.setOnItemClickListener(new GridViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(HorizontalGridView parent, View view, int position, long id) {
+                Log.i(TAG, "mBottomGridView onClick position=" + position);
+                if (position >= 0 && position < mBottomAdapter.getItemCount()) {
+                    ResolveInfo item = mBottomAdapter.getItem(position);
+                    if (item != null) {
+                        String pkg = item.activityInfo.packageName;
+                        mHidePackageList.remove(pkg);
+                        HidePackageList.save(MainActivity.this, mHidePackageList);
+                        update();
+                    } else {
+                        Log.i(TAG, "Item is null");
+                    }
+                }
+            }
+        });
+        mBottomAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mBottomSubView.getVisibility() == View.GONE) {
+                    mBottomSubView.setVisibility(View.VISIBLE);
+                    mBottomGridView.requestFocus();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -158,7 +188,7 @@ public class MainActivity extends Activity {
                     public void onClick(View view) {
                         mHidePackageList.add(selectedItem.activityInfo.packageName);
                         HidePackageList.save(MainActivity.this, mHidePackageList);
-                        mBottomView.setVisibility(View.GONE);
+                        showMenu(false);
                         update();
                     }
                 });
@@ -166,18 +196,17 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         uninstall(selectedItem.activityInfo.packageName);
-                        mBottomView.setVisibility(View.GONE);
+                        showMenu(false);
                     }
                 });
-                mBottomView.setVisibility(View.VISIBLE);
-                mBottomHideBtn.requestFocus();
+                showMenu(true);
             } else {
-                mBottomView.setVisibility(View.GONE);
+                showMenu(false);
             }
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_UP) {
             if (mBottomView.getVisibility() == View.VISIBLE) {
-                mBottomView.setVisibility(View.GONE);
+                showMenu(false);
                 return true;
             }
         }
@@ -217,6 +246,20 @@ public class MainActivity extends Activity {
         mAdapter.clear();
         mAdapter.addAll(getAllApps(this, true));
         mAdapter.notifyDataSetChanged();
+
+        mBottomAdapter.update(getAllApps(this, false));
+    }
+
+    private void showMenu(boolean isShow) {
+        if (isShow) {
+            mBottomView.setVisibility(View.VISIBLE);
+            mBottomHideBtn.requestFocus();
+            mGridWay.setFocusable(false);
+        } else {
+            mBottomView.setVisibility(View.GONE);
+            mBottomSubView.setVisibility(View.GONE);
+            mGridWay.setFocusable(true);
+        }
     }
 
     private void uninstall(String pkgName) {
