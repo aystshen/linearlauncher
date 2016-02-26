@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
         if (event.getKeyCode() == KeyEvent.KEYCODE_MENU
                 && event.getAction() == KeyEvent.ACTION_UP) {
             if (mBottomView.getVisibility() == View.GONE) {
-                ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem();
+                final ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem();
                 mBottomIcon.setImageDrawable(selectedItem.loadIcon(mPkgManager));
                 mBottomText.setText(selectedItem.loadLabel(mPkgManager));
                 mBottomHideBtn.setOnClickListener(new View.OnClickListener() {

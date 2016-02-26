@@ -1,11 +1,11 @@
 <resources>
-     <dimen name="grid_view_margin_top">135dp</dimen>
+     <dimen name="grid_view_margin_top">100dp</dimen>
      <dimen name="grid_view_height">277dp</dimen>
      <dimen name="grid_view_margin_fix">40dp</dimen>
-     <dimen name="scale_item_width">160dp</dimen>
-     <dimen name="scale_item_heitht">215dp</dimen>
+     <dimen name="scale_item_width">158dp</dimen>
+     <dimen name="scale_item_heitht">210dp</dimen>
      <dimen name="scale_item_iv_margin_top">22dp</dimen>
-     <dimen name="scale_item_iv_width">132dp</dimen>
-     <dimen name="scale_item_iv_heitht">132dp</dimen>
+     <dimen name="scale_item_iv_width">100dp</dimen>
+     <dimen name="scale_item_iv_heitht">100dp</dimen>
      <dimen name="scale_item_tv_margin_top">15dp</dimen>
 </resources>
