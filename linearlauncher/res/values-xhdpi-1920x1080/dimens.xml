@@ -1,5 +1,5 @@
 <resources>
-     <dimen name="grid_view_margin_top">135dp</dimen>
+     <dimen name="grid_view_margin_top">100dp</dimen>
      <dimen name="grid_view_height">277dp</dimen>
      <dimen name="grid_view_margin_fix">40dp</dimen>
      <dimen name="scale_item_width">158dp</dimen>

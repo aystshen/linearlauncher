@@ -27,12 +27,14 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     private PackageManager mPkgManager = null;
     private OnItemClickListener mOnItemClickListener = null;
     private HorizontalGridView mParent = null;
+    private int mLayoutId = R.layout.main_item;
 
-    public GridViewAdapter(Context context, HorizontalGridView parent, List<ResolveInfo> data) {
+    public GridViewAdapter(Context context, HorizontalGridView parent, int layoutId, List<ResolveInfo> data) {
         mContext = context;
         mPkgManager = context.getPackageManager();
         mData = data;
         mParent = parent;
+        mLayoutId = layoutId;
     }
 
     public void update(List<ResolveInfo> data) {
@@ -46,6 +48,10 @@ public class GridViewAdapter extends RecyclerView.Adapter {
             return mData.get(position);
         }
         return null;
+    }
+
+    public ResolveInfo getSelectedItem() {
+        return mData.get(mParent.getSelectedPosition());
     }
 
     private View.OnFocusChangeListener mItemFocusChangeListener = new View.OnFocusChangeListener() {
@@ -67,7 +73,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.bottom_item, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

@@ -36,9 +36,9 @@ public class MainAdapter extends ArrayAdapter<ResolveInfo> {
             convertView = (RelativeLayout) mInflater.inflate(
                     mLayoutId, parent, false);
             viewHolder.mIvTitle = (ImageView) convertView
-                    .findViewById(R.id.iv_title);
+                    .findViewById(R.id.iv);
             viewHolder.mTvTitle = (TextView) convertView
-                    .findViewById(R.id.tv_title);
+                    .findViewById(R.id.tv);
             viewHolder.mInnerRelative = (RelativeLayout) convertView
                     .findViewById(R.id.item_main_inner);
             convertView.setTag(viewHolder);

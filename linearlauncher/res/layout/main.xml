@@ -8,21 +8,17 @@
                 android:background="@drawable/bg_launcher"
                 tools:context="com.ayst.linearlauncher.MainActivity">
 
-    <com.ayst.linearlauncher.widget.twoway.TwoWayGridView
-            android:id="@+id/twoway_gridview"
+    <android.support.v17.leanback.widget.HorizontalGridView
+            android:id="@+id/main_gridview"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/grid_view_margin_top"
             android:layout_height="@dimen/grid_view_height"
-            android:clipChildren="false"
-            android:clipToPadding="true"
-            android:scrollbars="none"
-            app:cacheColorHint="#00000000"
-            app:horizontalSpacing="0dp"
-            app:numRows="1"
+            android:layout_marginTop="@dimen/grid_view_margin_top"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:fixMargin="@dimen/grid_view_margin_fix"
-            app:scrollDirectionLandscape="horizontal"
-            app:stretchMode="none"
-            app:numColumns="auto_fit"/>
+            app:numberOfRows="1"
+            app:rowHeight="@dimen/grid_view_height"/>
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"

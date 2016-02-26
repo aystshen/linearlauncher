@@ -14,11 +14,12 @@
             android:id="@+id/item_main_inner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:focusable="false"
             android:alpha="0.5">
 
         <com.ayst.linearlauncher.widget.CircleImageView
-                android:id="@+id/iv_title"
+                android:id="@+id/iv"
                 android:layout_marginTop="@dimen/scale_item_iv_margin_top"
                 android:layout_width="@dimen/scale_item_iv_width"
                 android:layout_height="@dimen/scale_item_iv_heitht"
@@ -27,16 +28,16 @@
                 android:contentDescription="@null"/>
 
         <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_title"
+                android:layout_below="@id/iv"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/scale_item_tv_margin_top"
                 android:gravity="center"
                 android:focusable="false"
                 android:textColor="@color/white"
-                android:textSize="24sp"/>
+                android:textSize="20sp"/>
     </RelativeLayout>
 
 </com.ayst.linearlauncher.widget.twoway.ScaleItemView>

@@ -2,7 +2,6 @@ package com.ayst.linearlauncher;
 
 import android.app.Activity;
 import android.content.*;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -25,8 +24,8 @@ import java.util.List;
 
 public class MainActivity extends Activity {
     private final static String TAG = "MainActivity";
-    private TwoWayGridView mGridWay = null;
-    private MainAdapter mAdapter = null;
+    private HorizontalGridView mMainGridView = null;
+    private GridViewAdapter mMainAdapter = null;
     private PackageManager mPkgManager = null;
 
     private BackDoor mBackDoorHide = null;
@@ -83,24 +82,20 @@ public class MainActivity extends Activity {
     private void initData() {
         mHidePackageList = HidePackageList.get(this);
 
-
-        mAdapter = new MainAdapter(this, R.layout.main_item);
-        mAdapter.addAll(getAllApps(this, true));
-
         mBackDoorHide = new BackDoor(BackDoor.DOORKEY_HIDE);
         mBackDoorReset = new BackDoor(BackDoor.DOORKEY_RESET);
     }
 
     private void initView() {
-        mGridWay = (TwoWayGridView) findViewById(R.id.twoway_gridview);
-        mGridWay.setOnItemClickListener(new TwoWayAdapterView.OnItemClickListener() {
-
+        mMainGridView = (HorizontalGridView) findViewById(R.id.main_gridview);
+        mMainAdapter = new GridViewAdapter(this, mMainGridView, R.layout.main_item, getAllApps(this, true));
+        mMainGridView.setAdapter(mMainAdapter);
+        mMainAdapter.setOnItemClickListener(new GridViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(TwoWayAdapterView<?> parent, View view,
-                                    int position, long id) {
-                Log.i(TAG, "mGridWay onItemClick position=" + position);
-                if (position >= 0 && position < mAdapter.getCount()) {
-                    ResolveInfo item = mAdapter.getItem(position);
+            public void onItemClick(HorizontalGridView parent, View view, int position, long id) {
+                Log.i(TAG, "mMainGridView onItemClick position=" + position);
+                if (position >= 0 && position < mMainAdapter.getItemCount()) {
+                    ResolveInfo item = mMainAdapter.getItem(position);
                     if (item != null) {
                         //该应用的包名
                         String pkg = item.activityInfo.packageName;
@@ -120,8 +115,6 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        mAdapter.setFixMargin(mGridWay.getMarginLeftOrRight());
-        mGridWay.setAdapter(mAdapter);
 
         mBottomView = (LinearLayout) findViewById(R.id.ll_bottom);
         mBottomIcon = (CircleImageView) findViewById(R.id.bottom_icon);
@@ -131,7 +124,7 @@ public class MainActivity extends Activity {
         mBottomAddBtn = (Button) findViewById(R.id.btn_add);
         mBottomSubView = (LinearLayout) findViewById(R.id.ll_sub);
         mBottomGridView = (HorizontalGridView) findViewById(R.id.bottom_gridview);
-        mBottomAdapter = new GridViewAdapter(this, mBottomGridView, getAllApps(this, false));
+        mBottomAdapter = new GridViewAdapter(this, mBottomGridView, R.layout.bottom_item, getAllApps(this, false));
         mBottomGridView.setAdapter(mBottomAdapter);
         mBottomAdapter.setOnItemClickListener(new GridViewAdapter.OnItemClickListener() {
             @Override
@@ -165,7 +158,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (mBackDoorHide.isAsRule(event)) {
-            ResolveInfo selectedItem = (ResolveInfo) mGridWay.getSelectedItem();
+            ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem();
             Log.i(TAG, "dispatchKeyEvent, BACKDOOR_HIDE selected package=" + selectedItem.activityInfo.packageName);
             mHidePackageList.add(selectedItem.activityInfo.packageName);
             HidePackageList.save(this, mHidePackageList);
@@ -180,7 +173,7 @@ public class MainActivity extends Activity {
         if (event.getKeyCode() == KeyEvent.KEYCODE_MENU
                 && event.getAction() == KeyEvent.ACTION_UP) {
             if (mBottomView.getVisibility() == View.GONE) {
-                ResolveInfo selectedItem = (ResolveInfo) mGridWay.getSelectedItem();
+                ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem();
                 mBottomIcon.setImageDrawable(selectedItem.loadIcon(mPkgManager));
                 mBottomText.setText(selectedItem.loadLabel(mPkgManager));
                 mBottomHideBtn.setOnClickListener(new View.OnClickListener() {
@@ -243,10 +236,7 @@ public class MainActivity extends Activity {
     }
 
     private void update() {
-        mAdapter.clear();
-        mAdapter.addAll(getAllApps(this, true));
-        mAdapter.notifyDataSetChanged();
-
+        mMainAdapter.update(getAllApps(this, true));
         mBottomAdapter.update(getAllApps(this, false));
     }
 
@@ -254,11 +244,11 @@ public class MainActivity extends Activity {
         if (isShow) {
             mBottomView.setVisibility(View.VISIBLE);
             mBottomHideBtn.requestFocus();
-            mGridWay.setFocusable(false);
+            mMainGridView.setFocusable(false);
         } else {
             mBottomView.setVisibility(View.GONE);
             mBottomSubView.setVisibility(View.GONE);
-            mGridWay.setFocusable(true);
+            mMainGridView.setFocusable(true);
         }
     }
 
