@@ -23,13 +23,13 @@ import java.util.List;
  */
 public class GridViewAdapter extends RecyclerView.Adapter {
     private Context mContext = null;
-    private List<ResolveInfo> mData = null;
+    private List<LauncherItem> mData = null;
     private PackageManager mPkgManager = null;
     private OnItemClickListener mOnItemClickListener = null;
     private HorizontalGridView mParent = null;
     private int mLayoutId = R.layout.main_item;
 
-    public GridViewAdapter(Context context, HorizontalGridView parent, int layoutId, List<ResolveInfo> data) {
+    public GridViewAdapter(Context context, HorizontalGridView parent, int layoutId, List<LauncherItem> data) {
         mContext = context;
         mPkgManager = context.getPackageManager();
         mData = data;
@@ -37,20 +37,20 @@ public class GridViewAdapter extends RecyclerView.Adapter {
         mLayoutId = layoutId;
     }
 
-    public void update(List<ResolveInfo> data) {
+    public void update(List<LauncherItem> data) {
         mData.clear();
         mData = data;
         this.notifyDataSetChanged();
     }
 
-    public ResolveInfo getItem(int position) {
+    public LauncherItem getItem(int position) {
         if (position >= 0 && position < mData.size()) {
             return mData.get(position);
         }
         return null;
     }
 
-    public ResolveInfo getSelectedItem() {
+    public LauncherItem getSelectedItem() {
         return mData.get(mParent.getSelectedPosition());
     }
 
@@ -80,7 +80,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        ResolveInfo item = mData.get(i);
+        ResolveInfo item = mData.get(i).mResolveInfo;
         ViewHolder holder = (ViewHolder) viewHolder;
         holder.tv.setText(item.activityInfo.loadLabel(mPkgManager));
         holder.iv.setImageDrawable(item.activityInfo.loadIcon(mPkgManager));

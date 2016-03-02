@@ -13,11 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.ayst.linearlauncher.db.DBManager;
 import com.ayst.linearlauncher.utils.BackDoor;
 import com.ayst.linearlauncher.utils.HidePackageList;
+import com.ayst.linearlauncher.utils.PkgUsageStatsUtil;
 import com.ayst.linearlauncher.widget.CircleImageView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -43,6 +47,8 @@ public class MainActivity extends Activity {
 
     private PackageChangedReceiver mPkgChangedReceiver = null;
 
+    private DBManager mDBManager = null;
+
     /**
      * Called when the activity is first created.
      */
@@ -51,6 +57,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        mDBManager = new DBManager(this);
         mPkgManager = this.getPackageManager();
         initData();
         initView();
@@ -93,7 +100,7 @@ public class MainActivity extends Activity {
             public void onItemClick(HorizontalGridView parent, View view, int position, long id) {
                 Log.i(TAG, "mMainGridView onItemClick position=" + position);
                 if (position >= 0 && position < mMainAdapter.getItemCount()) {
-                    ResolveInfo item = mMainAdapter.getItem(position);
+                    ResolveInfo item = mMainAdapter.getItem(position).mResolveInfo;
                     if (item != null) {
                         //该应用的包名
                         String pkg = item.activityInfo.packageName;
@@ -104,6 +111,7 @@ public class MainActivity extends Activity {
                             Intent intent = new Intent();
                             intent.setComponent(componet);
                             startActivity(intent);
+                            mDBManager.increase(pkg);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -129,7 +137,7 @@ public class MainActivity extends Activity {
             public void onItemClick(HorizontalGridView parent, View view, int position, long id) {
                 Log.i(TAG, "mBottomGridView onClick position=" + position);
                 if (position >= 0 && position < mBottomAdapter.getItemCount()) {
-                    ResolveInfo item = mBottomAdapter.getItem(position);
+                    ResolveInfo item = mBottomAdapter.getItem(position).mResolveInfo;
                     if (item != null) {
                         String pkg = item.activityInfo.packageName;
                         mHidePackageList.remove(pkg);
@@ -156,7 +164,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (mBackDoorHide.isAsRule(event)) {
-            ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem();
+            ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem().mResolveInfo;
             Log.i(TAG, "dispatchKeyEvent, BACKDOOR_HIDE selected package=" + selectedItem.activityInfo.packageName);
             mHidePackageList.add(selectedItem.activityInfo.packageName);
             HidePackageList.save(this, mHidePackageList);
@@ -171,7 +179,7 @@ public class MainActivity extends Activity {
         if (event.getKeyCode() == KeyEvent.KEYCODE_MENU
                 && event.getAction() == KeyEvent.ACTION_UP) {
             if (mBottomView.getVisibility() == View.GONE) {
-                final ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem();
+                final ResolveInfo selectedItem = (ResolveInfo) mMainAdapter.getSelectedItem().mResolveInfo;
                 mBottomIcon.setImageDrawable(selectedItem.loadIcon(mPkgManager));
                 mBottomText.setText(selectedItem.loadLabel(mPkgManager));
                 mBottomHideBtn.setOnClickListener(new View.OnClickListener() {
@@ -205,8 +213,8 @@ public class MainActivity extends Activity {
         return super.dispatchKeyEvent(event);
     }
 
-    public List<ResolveInfo> getAllApps(Context context, boolean isGetShow) {
-        List<ResolveInfo> apps = new ArrayList<ResolveInfo>();
+    public List<LauncherItem> getAllApps(Context context, boolean isGetShow) {
+        List<LauncherItem> apps = new ArrayList<LauncherItem>();
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -215,20 +223,25 @@ public class MainActivity extends Activity {
         boolean isHide = false;
         for (ResolveInfo item : appsAll) {
             isHide = false;
+            ComponentName cn = new ComponentName(item.activityInfo.packageName,
+                    item.activityInfo.name);
+            LauncherItem li = new LauncherItem(item, mDBManager.get(item.activityInfo.packageName));
             for (String pkg : mHidePackageList) {
                 if (item.activityInfo.packageName.equals(pkg)) {
                     Log.i(TAG, "getAllApps, isHide pkg=" + pkg);
                     if (!isGetShow) {
-                        apps.add(item);
+                        apps.add(li);
                     }
                     isHide = true;
                     break;
                 }
             }
             if (!isHide && isGetShow) {
-                apps.add(item);
+                apps.add(li);
             }
         }
+
+        Collections.sort(apps, new PkgComparator());
 
         return apps;
     }
@@ -273,6 +286,16 @@ public class MainActivity extends Activity {
                 Log.i(TAG, "uninstall:" + packageName);
                 update();
             }
+        }
+    }
+
+    class PkgComparator implements Comparator {
+        @Override
+        public int compare(Object lhs, Object rhs) {
+            LauncherItem a = (LauncherItem) lhs;
+            LauncherItem b = (LauncherItem) rhs;
+
+            return (b.mLaunchCnt - a.mLaunchCnt);
         }
     }
 }
