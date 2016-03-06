@@ -8,4 +8,5 @@
      <dimen name="scale_item_iv_width">100dp</dimen>
      <dimen name="scale_item_iv_heitht">100dp</dimen>
      <dimen name="scale_item_tv_margin_top">15dp</dimen>
+     <dimen name="scale_item_tv_text_size">22sp</dimen>
 </resources>
