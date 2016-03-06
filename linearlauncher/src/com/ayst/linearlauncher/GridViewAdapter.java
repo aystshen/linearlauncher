@@ -3,8 +3,12 @@ package com.ayst.linearlauncher;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v17.leanback.widget.ShadowOverlayContainer;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
@@ -14,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.ayst.linearlauncher.utils.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,12 +85,20 @@ public class GridViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        ResolveInfo item = mData.get(i).mResolveInfo;
-        ViewHolder holder = (ViewHolder) viewHolder;
+        final ResolveInfo item = mData.get(i).mResolveInfo;
+        final ViewHolder holder = (ViewHolder) viewHolder;
         holder.tv.setText(item.activityInfo.loadLabel(mPkgManager));
-        holder.iv.setImageDrawable(item.activityInfo.loadIcon(mPkgManager));
         holder.lv.setOnFocusChangeListener(mItemFocusChangeListener);
         holder.lv.setOnClickListener(mItemClickListener);
+
+        Palette.generateAsync(ImageHelper.drawableToBitmap(item.activityInfo.loadIcon(mPkgManager)),
+                new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(Palette palette) {
+                        int bgColor = palette.getVibrantColor(mContext.getResources().getColor(R.color.default_bg));
+                        holder.iv.setImageDrawable(ImageHelper.mergeColorBg(item.activityInfo.loadIcon(mPkgManager), bgColor));
+                    }
+                });
     }
 
     @Override
@@ -97,11 +110,12 @@ public class GridViewAdapter extends RecyclerView.Adapter {
         ImageView iv;
         TextView tv;
         View lv;
+
         public ViewHolder(View v) {
             super(v);
             lv = v;
-            iv = (ImageView)v.findViewById(R.id.iv);
-            tv = (TextView)v.findViewById(R.id.tv);
+            iv = (ImageView) v.findViewById(R.id.iv);
+            tv = (TextView) v.findViewById(R.id.tv);
         }
     }
 
@@ -114,15 +128,15 @@ public class GridViewAdapter extends RecyclerView.Adapter {
         /**
          * Callback method to be invoked when an item in this AdapterView has
          * been clicked.
-         * <p>
+         * <p/>
          * Implementers can call getItemAtPosition(position) if they need to
          * access the data associated with the selected item.
          *
-         * @param parent The AdapterView where the click happened.
-         * @param view The view within the AdapterView that was clicked (this
-         *            will be a view provided by the adapter)
+         * @param parent   The AdapterView where the click happened.
+         * @param view     The view within the AdapterView that was clicked (this
+         *                 will be a view provided by the adapter)
          * @param position The position of the view in the adapter.
-         * @param id The row id of the item that was clicked.
+         * @param id       The row id of the item that was clicked.
          */
         void onItemClick(HorizontalGridView parent, View view, int position,
                          long id);
@@ -140,9 +154,10 @@ public class GridViewAdapter extends RecyclerView.Adapter {
 
     /**
      * @return The callback to be invoked with an item in this AdapterView has
-     *         been clicked, or null id no callback has been set.
+     * been clicked, or null id no callback has been set.
      */
     public final OnItemClickListener getOnItemClickListener() {
         return mOnItemClickListener;
     }
+
 }
