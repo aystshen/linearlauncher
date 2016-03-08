@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="leanback_lib">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/leanback_lib/bin/leanback_lib.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
