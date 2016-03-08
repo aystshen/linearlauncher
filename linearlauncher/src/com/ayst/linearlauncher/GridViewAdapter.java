@@ -95,7 +95,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
                 new Palette.PaletteAsyncListener() {
                     @Override
                     public void onGenerated(Palette palette) {
-                        int bgColor = palette.getVibrantColor(mContext.getResources().getColor(R.color.default_bg));
+                        int bgColor = palette.getMutedColor(mContext.getResources().getColor(R.color.default_bg));
                         holder.iv.setImageDrawable(ImageHelper.mergeColorBg(item.activityInfo.loadIcon(mPkgManager), bgColor));
                     }
                 });
