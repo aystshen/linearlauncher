@@ -158,6 +158,9 @@ public class MainActivity extends Activity {
                 }
             }
         });
+        if (mBottomAdapter.getItemCount() > 0) {
+            mBottomAddBtn.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -249,6 +252,13 @@ public class MainActivity extends Activity {
     private void update() {
         mMainAdapter.update(getAllApps(this, true));
         mBottomAdapter.update(getAllApps(this, false));
+        if (mBottomAdapter.getItemCount() > 0) {
+            mBottomAddBtn.setVisibility(View.VISIBLE);
+        } else {
+            mBottomAddBtn.setVisibility(View.GONE);
+            mBottomSubView.setVisibility(View.GONE);
+            mBottomView.setVisibility(View.GONE);
+        }
     }
 
     private void showMenu(boolean isShow) {

@@ -76,7 +76,8 @@
                         android:textColor="#ffffff"
                         android:textSize="24sp"
                         android:background="@drawable/button_selector"
-                        android:text="@string/add"/>
+                        android:text="@string/add"
+                        android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout android:layout_width="match_parent"
