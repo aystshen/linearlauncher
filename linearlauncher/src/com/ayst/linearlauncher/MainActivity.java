@@ -209,8 +209,8 @@ public class MainActivity extends Activity {
                 && event.getAction() == KeyEvent.ACTION_UP) {
             if (mBottomView.getVisibility() == View.VISIBLE) {
                 showMenu(false);
-                return true;
             }
+            return true;
         }
 
         return super.dispatchKeyEvent(event);
