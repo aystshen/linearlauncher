@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/leanback_lib/leanback_lib.iml" filepath="$PROJECT_DIR$/leanback_lib/leanback_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/linearlauncher/linearlauncher.iml" filepath="$PROJECT_DIR$/linearlauncher/linearlauncher.iml" />
+    </modules>
+  </component>
+</project>
