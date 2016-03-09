@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ayst.linearlauncher.db.DBManager;
+import com.ayst.linearlauncher.upgrade.UpgradeManager;
 import com.ayst.linearlauncher.utils.BackDoor;
 import com.ayst.linearlauncher.utils.HidePackageList;
 import com.ayst.linearlauncher.utils.PkgUsageStatsUtil;
@@ -45,9 +46,17 @@ public class MainActivity extends Activity {
     private HorizontalGridView mBottomGridView = null;
     private GridViewAdapter mBottomAdapter = null;
 
+    private LinearLayout mUpgradeView = null;
+    private CircleImageView mUpgradeIv = null;
+    private TextView mUpgradeTv = null;
+    private Button mUpgradeOkBtn = null;
+    private Button mUpgradeCancelBtn = null;
+
     private PackageChangedReceiver mPkgChangedReceiver = null;
 
     private DBManager mDBManager = null;
+
+    private UpgradeManager mUpgradeManager = null;
 
     /**
      * Called when the activity is first created.
@@ -61,6 +70,21 @@ public class MainActivity extends Activity {
         mPkgManager = this.getPackageManager();
         initData();
         initView();
+
+        mUpgradeManager = new UpgradeManager(this, new UpgradeManager.OnFoundNewVersionInterface() {
+            @Override
+            public void onFoundNewVersionInterface(String version, String introduction, String url) {
+                mUpgradeIv.setImageResource(R.drawable.ic_launcher);
+                mUpgradeTv.setText(introduction);
+                mUpgradeView.setVisibility(View.VISIBLE);
+                mUpgradeOkBtn.requestFocus();
+                if (mBottomView.getVisibility() == View.VISIBLE) {
+                    mBottomView.setVisibility(View.GONE);
+                }
+                mMainGridView.setFocusable(false);
+            }
+        });
+        mUpgradeManager.checkUpdate();
     }
 
     @Override
@@ -162,6 +186,28 @@ public class MainActivity extends Activity {
             mBottomAddBtn.setVisibility(View.VISIBLE);
         }
 
+        // upgrade
+        mUpgradeView = (LinearLayout) findViewById(R.id.ll_upgrade);
+        mUpgradeIv = (CircleImageView) findViewById(R.id.iv_upgrade);
+        mUpgradeTv = (TextView) findViewById(R.id.tv_upgrade);
+        mUpgradeOkBtn = (Button) findViewById(R.id.btn_ok);
+        mUpgradeOkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mUpgradeManager.downloadAPK();
+                mUpgradeView.setVisibility(View.GONE);
+                mMainGridView.setFocusable(true);
+            }
+        });
+        mUpgradeCancelBtn = (Button) findViewById(R.id.btn_cancel);
+        mUpgradeCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mUpgradeView.setVisibility(View.GONE);
+                mMainGridView.setFocusable(true);
+            }
+        });
+
     }
 
     @Override
@@ -209,6 +255,10 @@ public class MainActivity extends Activity {
                 && event.getAction() == KeyEvent.ACTION_UP) {
             if (mBottomView.getVisibility() == View.VISIBLE) {
                 showMenu(false);
+            }
+            if (mUpgradeView.getVisibility() == View.VISIBLE) {
+                mUpgradeView.setVisibility(View.GONE);
+                mMainGridView.setFocusable(true);
             }
             return true;
         }

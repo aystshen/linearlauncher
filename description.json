@@ -1,0 +1,16 @@
+﻿{
+"appName" : "蛮荒桌面",
+"package" : "com.ayst.linearlauncher",
+"versionCode" : 2,
+"versionName" : "1.1.0",
+"authorition" : 1,
+"updateType" : "user",
+"subDescriptionUrl" : "",
+"downloadUrl" : "http://7xroxp.dl1.z0.glb.clouddn.com/linearlauncher_1.1.0.apk",
+"introduction" : "检测到新版本，是否更新？
+\n新版本：1.1.0 
+\n主要更新如下问题：
+\n· 优化图片显示效果，支持自动填充背景色
+\n· 增加后台升级功能
+\n· 修复Bug"
+}
