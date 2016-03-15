@@ -2,11 +2,11 @@
     <dimen name="grid_view_margin_top">170dp</dimen>
     <dimen name="grid_view_height">277dp</dimen>
     <dimen name="grid_view_margin_fix">40dp</dimen>
-    <dimen name="scale_item_width">160dp</dimen>
-    <dimen name="scale_item_heitht">215dp</dimen>
-    <dimen name="scale_item_iv_margin_top">22dp</dimen>
-    <dimen name="scale_item_iv_width">110dp</dimen>
-    <dimen name="scale_item_iv_heitht">110dp</dimen>
-    <dimen name="scale_item_tv_margin_top">15dp</dimen>
+    <dimen name="grid_item_width">160dp</dimen>
+    <dimen name="grid_item_heitht">215dp</dimen>
+    <dimen name="grid_item_iv_margin_top">22dp</dimen>
+    <dimen name="grid_item_iv_width">110dp</dimen>
+    <dimen name="grid_item_iv_heitht">110dp</dimen>
+    <dimen name="grid_item_tv_margin_top">15dp</dimen>
     <dimen name="scale_item_tv_text_size">22sp</dimen>
 </resources>

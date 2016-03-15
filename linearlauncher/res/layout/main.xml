@@ -15,10 +15,7 @@
             android:layout_marginTop="@dimen/grid_view_margin_top"
             android:clipToPadding="false"
             android:focusable="true"
-            android:focusableInTouchMode="true"
-            app:fixMargin="@dimen/grid_view_margin_fix"
-            app:numberOfRows="1"
-            app:rowHeight="@dimen/grid_view_height"/>
+            android:focusableInTouchMode="true"/>
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -93,10 +90,7 @@
                     android:layout_marginRight="20dp"
                     android:clipToPadding="false"
                     android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    app:fixMargin="10dp"
-                    app:numberOfRows="1"
-                    app:rowHeight="100dp"/>
+                    android:focusableInTouchMode="true"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -6,6 +6,8 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.support.v17.leanback.widget.FocusHighlight;
+import android.support.v17.leanback.widget.FocusHighlightHelper;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v17.leanback.widget.ShadowOverlayContainer;
 import android.support.v7.graphics.Palette;
@@ -32,7 +34,8 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     private PackageManager mPkgManager = null;
     private OnItemClickListener mOnItemClickListener = null;
     private HorizontalGridView mParent = null;
-    private int mLayoutId = R.layout.main_item;
+    private int mLayoutId = R.layout.grid_item;
+    private FocusHighlightHelper.DefaultItemFocusHighlight mFocusHighlight = null;
 
     public GridViewAdapter(Context context, HorizontalGridView parent, int layoutId, List<LauncherItem> data) {
         mContext = context;
@@ -40,6 +43,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
         mData = data;
         mParent = parent;
         mLayoutId = layoutId;
+        mFocusHighlight = new FocusHighlightHelper.DefaultItemFocusHighlight(FocusHighlight.ZOOM_FACTOR_LARGE, false);
     }
 
     public void update(List<LauncherItem> data) {
@@ -62,7 +66,10 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     private View.OnFocusChangeListener mItemFocusChangeListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
-
+            if (mFocusHighlight != null) {
+                mFocusHighlight.onItemFocused(v, hasFocus);
+            }
+            v.setAlpha(hasFocus ? 1f : 0.5f);
         }
     };
 
@@ -79,7 +86,15 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         View v = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
-        ViewHolder vh = new ViewHolder(v);
+        ShadowOverlayContainer wrapper = new ShadowOverlayContainer(parent.getContext(), R.drawable.bg_carousel_items);
+        wrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        wrapper.initialize(true, false, true);
+        wrapper.wrap(v);
+        wrapper.setOnFocusChangeListener(mItemFocusChangeListener);
+        wrapper.setOnClickListener(mItemClickListener);
+        wrapper.setFocusable(true);
+        ViewHolder vh = new ViewHolder(wrapper);
         return vh;
     }
 
@@ -88,9 +103,6 @@ public class GridViewAdapter extends RecyclerView.Adapter {
         final ResolveInfo item = mData.get(i).mResolveInfo;
         final ViewHolder holder = (ViewHolder) viewHolder;
         holder.tv.setText(item.activityInfo.loadLabel(mPkgManager));
-        holder.lv.setOnFocusChangeListener(mItemFocusChangeListener);
-        holder.lv.setOnClickListener(mItemClickListener);
-
         Palette.generateAsync(ImageHelper.drawableToBitmap(item.activityInfo.loadIcon(mPkgManager)),
                 new Palette.PaletteAsyncListener() {
                     @Override
@@ -99,6 +111,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
                         holder.iv.setImageDrawable(ImageHelper.mergeColorBg(item.activityInfo.loadIcon(mPkgManager), bgColor));
                     }
                 });
+        holder.lv.setAlpha((mParent.getSelectedPosition()==i) ? 1f : 0.5f);
     }
 
     @Override

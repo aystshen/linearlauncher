@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
 
     private void initView() {
         mMainGridView = (HorizontalGridView) findViewById(R.id.main_gridview);
-        mMainAdapter = new GridViewAdapter(this, mMainGridView, R.layout.main_item, getAllApps(this, true));
+        mMainAdapter = new GridViewAdapter(this, mMainGridView, R.layout.grid_item, getAllApps(this, true));
         mMainGridView.setAdapter(mMainAdapter);
         mMainAdapter.setOnItemClickListener(new GridViewAdapter.OnItemClickListener() {
             @Override
