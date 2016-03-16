@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,6 +19,7 @@ import com.ayst.linearlauncher.upgrade.UpgradeManager;
 import com.ayst.linearlauncher.utils.BackDoor;
 import com.ayst.linearlauncher.utils.HidePackageList;
 import com.ayst.linearlauncher.utils.PkgUsageStatsUtil;
+import com.ayst.linearlauncher.utils.Utils;
 import com.ayst.linearlauncher.widget.CircleImageView;
 
 import java.util.ArrayList;
@@ -109,6 +111,12 @@ public class MainActivity extends Activity {
     }
 
     private void initData() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        int lastVersion = prefs.getInt("version_key", 0);
+        if (lastVersion == 0) {
+            prefs.edit().putInt("version_key", Utils.getVersionCode(this)).apply();
+            HidePackageList.init(this);
+        }
         mHidePackageList = HidePackageList.get(this);
 
         mBackDoorHide = new BackDoor(BackDoor.DOORKEY_HIDE);
@@ -276,21 +284,18 @@ public class MainActivity extends Activity {
         boolean isHide = false;
         for (ResolveInfo item : appsAll) {
             isHide = false;
-            ComponentName cn = new ComponentName(item.activityInfo.packageName,
-                    item.activityInfo.name);
-            LauncherItem li = new LauncherItem(item, mDBManager.get(item.activityInfo.packageName));
             for (String pkg : mHidePackageList) {
                 if (item.activityInfo.packageName.equals(pkg)) {
                     Log.i(TAG, "getAllApps, isHide pkg=" + pkg);
                     if (!isGetShow) {
-                        apps.add(li);
+                        apps.add(new LauncherItem(item, mDBManager.get(item.activityInfo.packageName)));
                     }
                     isHide = true;
                     break;
                 }
             }
             if (!isHide && isGetShow) {
-                apps.add(li);
+                apps.add(new LauncherItem(item, mDBManager.get(item.activityInfo.packageName)));
             }
         }
 

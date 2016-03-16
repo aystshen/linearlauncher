@@ -25,6 +25,6 @@
     <color name="dark_gray">#999999</color>
     <color name="button_press_normal">#324c62</color>
     <color name="button_press_focus">#277db8</color>
-    <color name="default_bg">#a84200</color>
+    <color name="default_bg">#ff6b8e23</color>
 </resources>
 
