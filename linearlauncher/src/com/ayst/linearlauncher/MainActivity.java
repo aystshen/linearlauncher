@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.util.Log;
@@ -59,6 +61,16 @@ public class MainActivity extends Activity {
     private DBManager mDBManager = null;
 
     private UpgradeManager mUpgradeManager = null;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void dispatchMessage(Message msg) {
+            super.dispatchMessage(msg);
+            switch (msg.what) {
+                default:
+                    break;
+            }
+        }
+    };
 
     /**
      * Called when the activity is first created.
@@ -86,7 +98,12 @@ public class MainActivity extends Activity {
                 mMainGridView.setFocusable(false);
             }
         });
-        mUpgradeManager.checkUpdate();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mUpgradeManager.checkUpdate();
+            }
+        }, 20000);
     }
 
     @Override
