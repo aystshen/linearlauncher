@@ -33,6 +33,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     private List<LauncherItem> mData = null;
     private PackageManager mPkgManager = null;
     private OnItemClickListener mOnItemClickListener = null;
+    private OnFocusChangeListener mOnFocusChangeListener = null;
     private HorizontalGridView mParent = null;
     private int mLayoutId = R.layout.grid_item;
     private FocusHighlightHelper.DefaultItemFocusHighlight mFocusHighlight = null;
@@ -69,7 +70,10 @@ public class GridViewAdapter extends RecyclerView.Adapter {
             if (mFocusHighlight != null) {
                 mFocusHighlight.onItemFocused(v, hasFocus);
             }
-            v.setAlpha(hasFocus ? 1f : 0.5f);
+            v.setAlpha(hasFocus ? 1f : 0.3f);
+            if (mOnFocusChangeListener != null) {
+                mOnFocusChangeListener.onFocusChange(v, mParent.getSelectedPosition());
+            }
         }
     };
 
@@ -111,7 +115,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
                         holder.iv.setImageDrawable(ImageHelper.mergeColorBg(item.activityInfo.loadIcon(mPkgManager), bgColor));
                     }
                 });
-        holder.lv.setAlpha((mParent.getSelectedPosition()==i) ? 1f : 0.5f);
+        holder.lv.setAlpha((mParent.getSelectedPosition()==i) ? 1f : 0.3f);
     }
 
     @Override
@@ -171,6 +175,14 @@ public class GridViewAdapter extends RecyclerView.Adapter {
      */
     public final OnItemClickListener getOnItemClickListener() {
         return mOnItemClickListener;
+    }
+
+    public interface OnFocusChangeListener {
+        void onFocusChange(View view, int position);
+    }
+
+    public void setOnFocusChangeListener(OnFocusChangeListener listener) {
+        mOnFocusChangeListener = listener;
     }
 
 }

@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v17.leanback.widget.HorizontalGridView;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,19 +20,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ayst.linearlauncher.db.DBManager;
 import com.ayst.linearlauncher.upgrade.UpgradeManager;
-import com.ayst.linearlauncher.utils.BackDoor;
-import com.ayst.linearlauncher.utils.HidePackageList;
-import com.ayst.linearlauncher.utils.PkgUsageStatsUtil;
-import com.ayst.linearlauncher.utils.Utils;
+import com.ayst.linearlauncher.utils.*;
 import com.ayst.linearlauncher.widget.CircleImageView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class MainActivity extends Activity {
     private final static String TAG = "MainActivity";
+    private final static int MSG_UPDATE_BG = 1;
+
+    private View mBgView = null;
     private HorizontalGridView mMainGridView = null;
     private GridViewAdapter mMainAdapter = null;
     private PackageManager mPkgManager = null;
@@ -57,15 +56,48 @@ public class MainActivity extends Activity {
     private Button mUpgradeCancelBtn = null;
 
     private PackageChangedReceiver mPkgChangedReceiver = null;
-
     private DBManager mDBManager = null;
-
     private UpgradeManager mUpgradeManager = null;
+
+    private final static int CNT_INVALID = 1000;
+    private int mUpgradeTimeCnt = 0;
+    private int mStandTimeCnt = 2;
+
     private Handler mHandler = new Handler() {
         @Override
         public void dispatchMessage(Message msg) {
             super.dispatchMessage(msg);
             switch (msg.what) {
+                case MSG_UPDATE_BG:
+                    Palette.generateAsync(ImageHelper.drawableToBitmap(mMainAdapter.getItem(mMainGridView.getSelectedPosition()).mResolveInfo.activityInfo.loadIcon(mPkgManager)),
+                            new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    int mutedColor = getResources().getColor(R.color.transparent);
+                                    int vibrantColor = getResources().getColor(R.color.transparent);
+
+                                    Palette.Swatch mutedSwatch = palette.getDarkMutedSwatch();
+                                    if (mutedSwatch != null) {
+                                        mutedColor = mutedSwatch.getRgb();
+                                    } else if ((mutedSwatch = palette.getMutedSwatch()) != null) {
+                                        mutedColor = mutedSwatch.getRgb();
+                                    } else if ((mutedSwatch = palette.getLightMutedSwatch()) != null) {
+                                        mutedColor = mutedSwatch.getRgb();
+                                    }
+
+                                    Palette.Swatch vibrantSwatch = palette.getLightVibrantSwatch();
+                                    if (vibrantSwatch != null) {
+                                        vibrantColor = vibrantSwatch.getRgb();
+                                    } else if ((vibrantSwatch = palette.getVibrantSwatch()) != null) {
+                                        vibrantColor = vibrantSwatch.getRgb();
+                                    } else if ((vibrantSwatch = palette.getDarkVibrantSwatch()) != null) {
+                                        vibrantColor = vibrantSwatch.getRgb();
+                                    }
+                                    GradientDrawable bgDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{vibrantColor, mutedColor});
+                                    mBgView.setBackgroundDrawable(bgDrawable);
+                                }
+                            });
+                    break;
                 default:
                     break;
             }
@@ -101,9 +133,23 @@ public class MainActivity extends Activity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mUpgradeManager.checkUpdate();
+                if (mUpgradeTimeCnt < 20) {
+                    mUpgradeTimeCnt++;
+                } else if (mUpgradeTimeCnt == 20) {
+                    mUpgradeTimeCnt = CNT_INVALID;
+                    mUpgradeManager.checkUpdate();
+                }
+
+                if (mStandTimeCnt < 2) {
+                    mStandTimeCnt++;
+                } else if (mStandTimeCnt == 2) {
+                    mUpgradeTimeCnt = CNT_INVALID;
+                    mHandler.sendEmptyMessage(MSG_UPDATE_BG);
+                }
+
+                mHandler.postDelayed(this, 1000);
             }
-        }, 20000);
+        }, 0);
     }
 
     @Override
@@ -141,6 +187,8 @@ public class MainActivity extends Activity {
     }
 
     private void initView() {
+        mBgView = (View) findViewById(R.id.bg_view);
+
         mMainGridView = (HorizontalGridView) findViewById(R.id.main_gridview);
         mMainAdapter = new GridViewAdapter(this, mMainGridView, R.layout.grid_item, getAllApps(this, true));
         mMainGridView.setAdapter(mMainAdapter);
@@ -168,6 +216,12 @@ public class MainActivity extends Activity {
                         Log.i(TAG, "Item is null");
                     }
                 }
+            }
+        });
+        mMainAdapter.setOnFocusChangeListener(new GridViewAdapter.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, int position) {
+                mStandTimeCnt = 0;
             }
         });
 

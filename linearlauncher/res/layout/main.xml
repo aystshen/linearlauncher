@@ -2,11 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/rl_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_launcher"
                 tools:context="com.ayst.linearlauncher.MainActivity">
+
+    <View android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/transparent"
+          android:alpha="0.5"
+          android:id="@+id/bg_view"/>
 
     <android.support.v17.leanback.widget.HorizontalGridView
             android:id="@+id/main_gridview"
@@ -140,6 +145,5 @@
                     android:text="@string/cancel"/>
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
 
