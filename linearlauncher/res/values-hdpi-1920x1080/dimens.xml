@@ -3,10 +3,10 @@
     <dimen name="grid_view_height">300dp</dimen>
     <dimen name="grid_view_margin_fix">50dp</dimen>
     <dimen name="grid_item_width">210dp</dimen>
-    <dimen name="grid_item_heitht">300dp</dimen>
-    <dimen name="grid_item_iv_margin_top">30dp</dimen>
+    <dimen name="grid_item_height">300dp</dimen>
+    <dimen name="grid_view_padding">30dp</dimen>
     <dimen name="grid_item_iv_width">140dp</dimen>
-    <dimen name="grid_item_iv_heitht">140dp</dimen>
+    <dimen name="grid_item_iv_height">140dp</dimen>
     <dimen name="grid_item_tv_margin_top">10dp</dimen>
-    <dimen name="scale_item_tv_text_size">24sp</dimen>
+    <dimen name="grid_item_tv_text_size">24sp</dimen>
 </resources>

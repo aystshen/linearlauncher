@@ -1,12 +1,27 @@
 <resources>
      <dimen name="grid_view_margin_top">130dp</dimen>
-     <dimen name="grid_view_height">277dp</dimen>
-     <dimen name="grid_view_margin_fix">40dp</dimen>
-     <dimen name="grid_item_width">158dp</dimen>
-     <dimen name="grid_item_heitht">277dp</dimen>
-     <dimen name="grid_item_iv_margin_top">22dp</dimen>
+     <dimen name="grid_view_height">200dp</dimen>
+     <dimen name="grid_view_padding">20dp</dimen>
+     <dimen name="grid_item_width">153dp</dimen>
+     <dimen name="grid_item_height">153dp</dimen>
      <dimen name="grid_item_iv_width">100dp</dimen>
-     <dimen name="grid_item_iv_heitht">100dp</dimen>
-     <dimen name="grid_item_tv_margin_top">15dp</dimen>
-     <dimen name="scale_item_tv_text_size">18sp</dimen>
+     <dimen name="grid_item_iv_height">100dp</dimen>
+     <dimen name="grid_item_tv_text_size">18sp</dimen>
+
+     <dimen name="bottom_main_height">100dp</dimen>
+     <dimen name="bottom_main_padding">20dp</dimen>
+     <dimen name="bottom_icon_width">60dp</dimen>
+     <dimen name="bottom_icon_height">60dp</dimen>
+     <dimen name="bottom_text_size">25sp</dimen>
+     <dimen name="bottom_btn_width">120dp</dimen>
+     <dimen name="bottom_btn_height">60dp</dimen>
+     <dimen name="bottom_btn_text_size">24sp</dimen>
+     <dimen name="bottom_sub_height">100dp</dimen>
+     <dimen name="bottom_sub_padding">10dp</dimen>
+
+     <dimen name="bottom_grid_item_width">80dp</dimen>
+     <dimen name="bottom_grid_item_height">80dp</dimen>
+     <dimen name="bottom_grid_item_iv_width">40dp</dimen>
+     <dimen name="bottom_grid_item_iv_height">40dp</dimen>
+     <dimen name="bottom_grid_item_tv_text_size">12sp</dimen>
 </resources>

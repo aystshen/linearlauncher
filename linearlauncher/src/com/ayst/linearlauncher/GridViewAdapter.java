@@ -70,7 +70,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
             if (mFocusHighlight != null) {
                 mFocusHighlight.onItemFocused(v, hasFocus);
             }
-            v.setAlpha(hasFocus ? 1f : 0.3f);
+            v.setAlpha(hasFocus ? 1f : 0.5f);
             if (mOnFocusChangeListener != null) {
                 mOnFocusChangeListener.onFocusChange(v, mParent.getSelectedPosition());
             }
@@ -90,7 +90,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         View v = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
-        ShadowOverlayContainer wrapper = new ShadowOverlayContainer(parent.getContext(), R.drawable.bg_carousel_items);
+        ShadowOverlayContainer wrapper = new ShadowOverlayContainer(parent.getContext(), R.drawable.bg_grid_item);
         wrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         wrapper.initialize(true, false, true);
@@ -115,7 +115,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
                         holder.iv.setImageDrawable(ImageHelper.mergeColorBg(item.activityInfo.loadIcon(mPkgManager), bgColor));
                     }
                 });
-        holder.lv.setAlpha((mParent.getSelectedPosition()==i) ? 1f : 0.3f);
+        holder.lv.setAlpha((mParent.getSelectedPosition()==i) ? 1f : 0.5f);
     }
 
     @Override
