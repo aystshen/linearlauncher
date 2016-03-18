@@ -59,9 +59,10 @@ public class MainActivity extends Activity {
     private DBManager mDBManager = null;
     private UpgradeManager mUpgradeManager = null;
 
-    private final static int CNT_INVALID = 1000;
-    private int mUpgradeTimeCnt = 0;
-    private int mStandTimeCnt = 2;
+    private final static int UPGRADE_CNT = 20;
+    private final static int STAND_CNT = 2;
+    private int mUpgradeCountDown = UPGRADE_CNT;
+    private int mStandCountDown = STAND_CNT;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -133,17 +134,17 @@ public class MainActivity extends Activity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mUpgradeTimeCnt < 20) {
-                    mUpgradeTimeCnt++;
-                } else if (mUpgradeTimeCnt == 20) {
-                    mUpgradeTimeCnt = CNT_INVALID;
+                if (mUpgradeCountDown > 0) {
+                    mUpgradeCountDown--;
+                } else if (mUpgradeCountDown == 0) {
+                    mUpgradeCountDown = -1;
                     mUpgradeManager.checkUpdate();
                 }
 
-                if (mStandTimeCnt < 2) {
-                    mStandTimeCnt++;
-                } else if (mStandTimeCnt == 2) {
-                    mUpgradeTimeCnt = CNT_INVALID;
+                if (mStandCountDown > 0) {
+                    mStandCountDown--;
+                } else if (mStandCountDown == 0) {
+                    mStandCountDown = -1;
                     mHandler.sendEmptyMessage(MSG_UPDATE_BG);
                 }
 
@@ -221,7 +222,7 @@ public class MainActivity extends Activity {
         mMainAdapter.setOnFocusChangeListener(new GridViewAdapter.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, int position) {
-                mStandTimeCnt = 0;
+                mStandCountDown = STAND_CNT;
             }
         });
 

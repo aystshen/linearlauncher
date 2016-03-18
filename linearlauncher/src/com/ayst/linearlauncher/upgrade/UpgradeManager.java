@@ -42,6 +42,7 @@ public class UpgradeManager implements RequestTaskInterface {
     }
 
     public void checkUpdate() {
+        Log.i(TAG, "checkUpdate start...");
         checkUpdate(REQUEST_DESCRIPTOR_URL);
     }
 
