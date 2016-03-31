@@ -151,11 +151,6 @@ public class MainActivity extends Activity {
                 mHandler.postDelayed(this, 1000);
             }
         }, 0);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         mPkgChangedReceiver = new PackageChangedReceiver();
         IntentFilter intentFilter = new IntentFilter();
@@ -166,9 +161,24 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //update();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         if (mPkgChangedReceiver != null) {
             unregisterReceiver(mPkgChangedReceiver);
         }
@@ -379,6 +389,8 @@ public class MainActivity extends Activity {
     private void update() {
         mMainAdapter.update(getAllApps(this, true));
         mBottomAdapter.update(getAllApps(this, false));
+        mMainGridView.invalidate();
+        mBottomSubView.invalidate();
         if (mBottomAdapter.getItemCount() > 0) {
             mBottomAddBtn.setVisibility(View.VISIBLE);
         } else {
