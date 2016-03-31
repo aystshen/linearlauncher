@@ -29,8 +29,11 @@
             android:gravity="center"
             android:focusable="false"
             android:singleLine="true"
-            android:ellipsize="end"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
             android:textColor="@color/white"
+            android:background="@color/black"
+            android:text="test"
             android:textSize="@dimen/grid_item_tv_text_size"/>
 
 </LinearLayout>
