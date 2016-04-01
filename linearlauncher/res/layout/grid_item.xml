@@ -8,7 +8,8 @@
         android:padding="5dp"
         android:gravity="center">
 
-    <LinearLayout android:layout_width="@dimen/grid_item_iv_width"
+    <LinearLayout android:id="@+id/iv_bg"
+                  android:layout_width="@dimen/grid_item_iv_width"
                   android:layout_height="@dimen/grid_item_iv_height"
                   android:orientation="vertical"
                   android:padding="10dp"

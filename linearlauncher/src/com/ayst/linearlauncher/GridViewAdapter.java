@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,6 +40,8 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     private int mLayoutId = R.layout.grid_item;
     private FocusHighlightHelper.DefaultItemFocusHighlight mFocusHighlight = null;
 
+    private RotateAnimation mAnimation = null;
+
     public GridViewAdapter(Context context, HorizontalGridView parent, int layoutId, List<LauncherItem> data) {
         mContext = context;
         mPkgManager = context.getPackageManager();
@@ -45,6 +49,15 @@ public class GridViewAdapter extends RecyclerView.Adapter {
         mParent = parent;
         mLayoutId = layoutId;
         mFocusHighlight = new FocusHighlightHelper.DefaultItemFocusHighlight(FocusHighlight.ZOOM_FACTOR_LARGE, false);
+
+        /** 设置旋转动画 */
+        mAnimation =new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF,
+                0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mAnimation.setDuration(3000);//设置动画持续时间
+        mAnimation.setRepeatCount(Animation.INFINITE);//设置重复次数
+        //mAnimation.setFillAfter(boolean);//动画执行完后是否停留在执行完的状态
+        //mAnimation.setStartOffset(long startOffset);//执行前的等待时间
+        mAnimation.startNow();
     }
 
     public void update(List<LauncherItem> data) {
@@ -70,7 +83,20 @@ public class GridViewAdapter extends RecyclerView.Adapter {
             if (mFocusHighlight != null) {
                 mFocusHighlight.onItemFocused(v, hasFocus);
             }
-            v.setAlpha(hasFocus ? 1f : 0.5f);
+            View iconBg = v.findViewById(R.id.iv_bg);
+            if (hasFocus) {
+                v.setAlpha(1f);
+                if (iconBg != null) {
+                    iconBg.setBackgroundColor(0x00000000);
+                    iconBg.setAnimation(mAnimation);
+                }
+            } else {
+                v.setAlpha(0.5f);
+                if (iconBg != null) {
+                    iconBg.setBackgroundResource(R.drawable.bg_grid_icon);
+                    iconBg.clearAnimation();
+                }
+            }
             if (mOnFocusChangeListener != null) {
                 mOnFocusChangeListener.onFocusChange(v, mParent.getSelectedPosition());
             }

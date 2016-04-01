@@ -16,7 +16,7 @@
     <android.support.v17.leanback.widget.HorizontalGridView
             android:id="@+id/main_gridview"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/grid_view_height"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/grid_view_margin_top"
             android:padding="@dimen/grid_view_padding"
             android:clipToPadding="false"
