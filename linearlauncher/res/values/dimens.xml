@@ -4,9 +4,9 @@
      <dimen name="grid_view_padding">25dp</dimen>
      <dimen name="grid_item_width">205dp</dimen>
      <dimen name="grid_item_height">205dp</dimen>
-     <dimen name="grid_item_iv_width">125dp</dimen>
-     <dimen name="grid_item_iv_height">125dp</dimen>
-     <dimen name="grid_item_tv_text_size">30sp</dimen>
+     <dimen name="grid_item_iv_width">135dp</dimen>
+     <dimen name="grid_item_iv_height">135dp</dimen>
+     <dimen name="grid_item_tv_text_size">26sp</dimen>
 
      <dimen name="bottom_main_height">125dp</dimen>
      <dimen name="bottom_main_padding">25dp</dimen>

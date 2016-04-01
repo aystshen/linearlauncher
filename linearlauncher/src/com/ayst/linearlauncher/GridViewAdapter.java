@@ -85,13 +85,13 @@ public class GridViewAdapter extends RecyclerView.Adapter {
             }
             View iconBg = v.findViewById(R.id.iv_bg);
             if (hasFocus) {
-                v.setAlpha(1f);
+                //v.setAlpha(1f);
                 if (iconBg != null) {
                     iconBg.setBackgroundColor(0x00000000);
                     iconBg.setAnimation(mAnimation);
                 }
             } else {
-                v.setAlpha(0.5f);
+                //v.setAlpha(0.7f);
                 if (iconBg != null) {
                     iconBg.setBackgroundResource(R.drawable.bg_grid_icon);
                     iconBg.clearAnimation();
@@ -141,7 +141,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
                         holder.iv.setImageDrawable(ImageHelper.mergeColorBg(item.activityInfo.loadIcon(mPkgManager), bgColor));
                     }
                 });
-        holder.lv.setAlpha((mParent.getSelectedPosition()==i) ? 1f : 0.5f);
+        //holder.lv.setAlpha((mParent.getSelectedPosition()==i) ? 1f : 0.7f);
     }
 
     @Override
