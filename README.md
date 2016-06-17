@@ -1,1 +1,1 @@
-![screenshot1](https://bitbucket.org/aystshen/linearlauncher/src/da7986c479edd1a126af8482e5b1ef7512215323/screenshots/device-2016-06-17-221319.png?at=master&fileviewer=file-view-default)
+![screenshot1](http://7xroxp.dl1.z0.glb.clouddn.com/screenshots/device-2016-06-17-221659.png)
