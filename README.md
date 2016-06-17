@@ -1,4 +1,7 @@
+
 #蛮荒桌面
+
+![logo](http://7xroxp.dl1.z0.glb.clouddn.com/logo.png) 
 
 ##[点击下载](http://7xroxp.dl1.z0.glb.clouddn.com/linearlauncher_1.5.1.apk) 
  
